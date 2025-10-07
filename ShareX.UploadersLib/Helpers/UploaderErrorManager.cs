@@ -23,7 +23,6 @@
 
 #endregion License Information (GPL v3)
 
-using ShareX.UploadersLib.Properties;
 using System;
 using System.Collections.Generic;
 using System.Linq;
@@ -36,7 +35,7 @@ namespace ShareX.UploadersLib
 
         public int Count => Errors.Count;
 
-        public string DefaultTitle { get; set; } = Resources.Error;
+        public string DefaultTitle { get; set; } = "Error";
 
         public UploaderErrorManager()
         {

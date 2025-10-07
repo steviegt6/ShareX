@@ -23,16 +23,11 @@
 
 #endregion License Information (GPL v3)
 
-using ShareX.HelpersLib;
-using System.Text;
-
 namespace ShareX.UploadersLib
 {
     public class UploadResult
     {
         public string URL { get; set; }
-        public string ThumbnailURL { get; set; }
-        public string DeletionURL { get; set; }
         public string ShortenedURL { get; set; }
 
         private bool isSuccess;
@@ -53,14 +48,6 @@ namespace ShareX.UploadersLib
         public UploaderErrorManager Errors { get; set; }
         public bool IsURLExpected { get; set; }
 
-        public bool IsError
-        {
-            get
-            {
-                return Errors != null && Errors.Count > 0 && (!IsURLExpected || string.IsNullOrEmpty(URL));
-            }
-        }
-
         public ResponseInfo ResponseInfo { get; set; }
 
         public UploadResult()
@@ -73,14 +60,6 @@ namespace ShareX.UploadersLib
         {
             Response = source;
             URL = url;
-        }
-
-        public void ForceHTTPS()
-        {
-            URL = URLHelpers.ForcePrefix(URL);
-            ThumbnailURL = URLHelpers.ForcePrefix(ThumbnailURL);
-            DeletionURL = URLHelpers.ForcePrefix(DeletionURL);
-            ShortenedURL = URLHelpers.ForcePrefix(ShortenedURL);
         }
 
         public override string ToString()
@@ -96,26 +75,6 @@ namespace ShareX.UploadersLib
             }
 
             return "";
-        }
-
-        public string ErrorsToString()
-        {
-            if (IsError)
-            {
-                return Errors.ToString();
-            }
-
-            return null;
-        }
-
-        public string ToSummaryString()
-        {
-            StringBuilder sb = new StringBuilder();
-            sb.AppendLine("URL: " + URL);
-            sb.AppendLine("Thumbnail URL: " + ThumbnailURL);
-            sb.AppendLine("Shortened URL: " + ShortenedURL);
-            sb.AppendLine("Deletion URL: " + DeletionURL);
-            return sb.ToString();
         }
     }
 }

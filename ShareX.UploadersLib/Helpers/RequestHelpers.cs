@@ -51,7 +51,7 @@ namespace ShareX.UploadersLib
 
             string accept = null;
             string referer = null;
-            string userAgent = ShareXResources.UserAgent;
+            string userAgent = "teto";
 
             if (headers != null)
             {
@@ -119,14 +119,14 @@ namespace ShareX.UploadersLib
             request.CookieContainer = new CookieContainer();
             if (cookies != null) request.CookieContainer.Add(cookies);
             request.Method = method.ToString();
-            IWebProxy proxy = HelpersOptions.CurrentProxy.GetWebProxy();
-            if (proxy != null) request.Proxy = proxy;
+            /*IWebProxy proxy = HelpersOptions.CurrentProxy.GetWebProxy();
+            if (proxy != null) request.Proxy = proxy;*/
             request.Referer = referer;
             request.UserAgent = userAgent;
 
             if (contentLength > 0)
             {
-                request.AllowWriteStreamBuffering = HelpersOptions.CurrentProxy.IsValidProxy();
+                request.AllowWriteStreamBuffering = /*HelpersOptions.CurrentProxy.IsValidProxy();*/ true;
 
                 if (method == HttpMethod.GET)
                 {
@@ -204,28 +204,6 @@ namespace ShareX.UploadersLib
         public static byte[] MakeFileInputContentClose(string boundary)
         {
             return Encoding.UTF8.GetBytes($"\r\n--{boundary}--\r\n");
-        }
-
-        public static string ResponseToString(WebResponse response)
-        {
-            if (response != null)
-            {
-                using (Stream responseStream = response.GetResponseStream())
-                using (StreamReader reader = new StreamReader(responseStream, Encoding.UTF8))
-                {
-                    return reader.ReadToEnd();
-                }
-            }
-
-            return null;
-        }
-
-        public static NameValueCollection CreateAuthenticationHeader(string username, string password)
-        {
-            string authorization = TranslatorHelper.TextToBase64(username + ":" + password);
-            NameValueCollection headers = new NameValueCollection();
-            headers["Authorization"] = "Basic " + authorization;
-            return headers;
         }
     }
 }

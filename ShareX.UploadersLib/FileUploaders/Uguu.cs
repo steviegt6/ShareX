@@ -27,18 +27,6 @@ using System.IO;
 
 namespace ShareX.UploadersLib.FileUploaders
 {
-    public class UguuFileUploaderService : FileUploaderService
-    {
-        public override FileDestination EnumValue { get; } = FileDestination.Uguu;
-
-        public override bool CheckConfig(UploadersConfig config) => true;
-
-        public override GenericUploader CreateUploader(UploadersConfig config, TaskReferenceHelper taskInfo)
-        {
-            return new Uguu();
-        }
-    }
-
     public class Uguu : FileUploader
     {
         public override UploadResult Upload(Stream stream, string fileName)
